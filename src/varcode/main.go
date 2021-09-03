@@ -19,4 +19,12 @@ func main() {
 	age2 := 18
 	isMan3 := true
 	println(name2, age2, isMan3)
+	// 忽略接受
+	x, _ := get()
+	_, y := get()
+	println(x, y)
+}
+
+func get() (int, string) {
+	return 10, "Q1mi"
 }
