@@ -131,3 +131,36 @@ func dfs(n int) {
 		dfs((n << 1) + 1)
 	}
 }
+
+func checkValidString(s string) bool {
+	lefts := []int{}
+	stars := []int{}
+	for i, c := range s {
+		if c == ' ' {
+			continue
+		}
+		if c == '(' {
+			lefts = append(lefts, i)
+		} else if c == '*' {
+			stars = append(stars, i)
+		} else {
+			if len(lefts) > 0 {
+				lefts = lefts[:len(lefts)-1]
+			} else if len(stars) > 0 {
+				stars = stars[:len(stars)-1]
+			} else {
+				return false
+			}
+		}
+	}
+	for len(lefts) > 0 && len(stars) > 0 {
+		l := lefts[0]
+		s := stars[0]
+		if l > s {
+			return false
+		}
+		lefts = lefts[:len(lefts)-1]
+		stars = stars[:len(stars)-1]
+	}
+	return len(lefts) == 0
+}
