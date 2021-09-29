@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 var (
 	coins = 50
@@ -163,4 +166,62 @@ func checkValidString(s string) bool {
 		stars = stars[:len(stars)-1]
 	}
 	return len(lefts) == 0
+}
+func numberOfBoomerangs(points [][]int) int {
+	ans := 0
+	for i := 0; i < len(points); i++ {
+		ansMap := make(map[int]int)
+		for j := 0; j < len(points); j++ {
+			if i == j {
+				continue
+			}
+			x := points[i][0] - points[j][0]
+			y := points[i][1] - points[j][1]
+			point := x*x + y*y
+			ansMap[point] = ansMap[point] + 1
+		}
+		for _, v := range ansMap {
+			ans += v * (v - 1)
+		}
+	}
+	return ans
+}
+
+func findLongestWord(s string, dictionary []string) string {
+	ans := ""
+	max := -1
+	sort.Strings(dictionary)
+	for _, d := range dictionary {
+		sI := 0
+		dI := 0
+		for sI < len(s) && dI < len(d) {
+			if s[sI] == d[dI] {
+				dI++
+			}
+			sI++
+		}
+		if dI == len(d) && len(d) > max {
+			max = len(d)
+			ans = d
+		}
+	}
+	return ans
+}
+
+func isStraight(nums []int) bool {
+	zero := 0
+	sort.Ints(nums)
+	for i := 0; i < len(nums)-1; i++ {
+		if nums[i] == 0 {
+			zero++
+			continue
+		}
+		if nums[i+1]-nums[i] != 0 {
+			if nums[i+1]-nums[i]-1 > zero || nums[i+1] == nums[i] {
+				return false
+			}
+			zero -= nums[i+1] - nums[i] - 1
+		}
+	}
+	return true
 }
