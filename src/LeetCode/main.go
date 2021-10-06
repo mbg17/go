@@ -20,6 +20,14 @@ func main() {
 	left := dispatchCoin()
 	fmt.Println("剩下：", left)
 	fmt.Println(distribution)
+	a := 1
+	b := 2
+	a = a ^ b
+	b = b ^ a
+	a = a ^ b
+	fmt.Println(1 << 2)
+	fmt.Println(-1 << 2)
+	fmt.Println(a, b)
 }
 
 //a. 名字中每包含1个'e'或'E'分1枚金币
@@ -224,4 +232,75 @@ func isStraight(nums []int) bool {
 		}
 	}
 	return true
+}
+
+func computeArea(ax1 int, ay1 int, ax2 int, ay2 int, bx1 int, by1 int, bx2 int, by2 int) int {
+	a := (ax2 - ax1) * (ay2 - ay1)
+	b := (bx2 - bx1) * (by2 - by1)
+	x1 := 0
+	x2 := 0
+	y1 := 0
+	y2 := 0
+	if (by2 < ay2 && by2 > ay1) || ay2 == by2 {
+		y1 = by2
+	}
+	if (ay2 < by2 && ay2 > by1) || ay2 == by2 {
+		y1 = ay2
+	}
+	if (by1 > ay1 && by1 < ay2) || ay1 == by1 {
+		y2 = by1
+	}
+	if (ay1 > by1 && ay1 < by2) || ay1 == by1 {
+		y2 = ay1
+	}
+	if (bx1 > ax1 && bx1 < ax2) || bx1 == ax1 {
+		x1 = bx1
+	}
+	if (ax1 > bx1 && ax1 < bx2) || bx1 == ax1 {
+		x1 = ax1
+	}
+	if (bx2 < ax2 && bx2 > ax1) || bx2 == ax2 {
+		x2 = bx2
+	}
+	if (ax2 < bx2 && ax2 > bx1) || ax2 == bx2 {
+		x2 = ax2
+	}
+	return a + b - (y1-y2)*(x2-x1)
+}
+
+func destCity(paths [][]string) string {
+	pathMap := make(map[string]string)
+	allPath := make(map[string]string)
+	for _, v := range paths {
+		pathMap[v[0]] = v[1]
+		allPath[v[0]] = ""
+		allPath[v[1]] = ""
+	}
+	ans := ""
+	for k, _ := range allPath {
+		city := pathMap[k]
+		if city == "" {
+			ans = k
+			break
+		}
+	}
+	return ans
+}
+
+func thirdMax(nums []int) int {
+	ans := len(nums) - 1
+	num := 1
+	sort.IntSlice.Sort(nums)
+	for i := len(nums) - 1; i >= 0; i-- {
+		if i == len(nums)-1 || nums[i] == nums[i+1] {
+			continue
+		} else {
+			ans = i
+			num++
+		}
+		if num == 3 {
+			return nums[ans]
+		}
+	}
+	return nums[len(nums)-1]
 }
