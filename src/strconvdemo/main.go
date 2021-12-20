@@ -28,4 +28,19 @@ func main() {
 	fmt.Printf("%T %v\n", parseBool, parseBool)
 	fmt.Printf("%T %v\n", parseFloat, parseFloat)
 	fmt.Printf("%T %v\n", parseInt, parseInt)
+	jinzita(20)
+}
+
+func jinzita(ceng int) {
+	val := 1
+	for i := 0; i <= ceng; i++ {
+		for j := 0; j <= ceng-i; j++ {
+			fmt.Print(" ")
+		}
+		for k := 1; k <= val; k++ {
+			fmt.Print("△")
+		}
+		val += 2
+		fmt.Println()
+	}
 }

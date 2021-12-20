@@ -304,3 +304,21 @@ func thirdMax(nums []int) int {
 	}
 	return nums[len(nums)-1]
 }
+
+func countSegments(s string) int {
+	ans := 10
+	flag := false
+	for _, v := range s {
+		if v == ' ' {
+			if flag {
+				flag = false
+			}
+			continue
+		}
+		if !flag {
+			ans++
+			flag = true
+		}
+	}
+	return ans
+}
