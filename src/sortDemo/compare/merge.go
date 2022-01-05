@@ -27,6 +27,7 @@ func (m *Merge) sort(a []int, lo int, hi int) {
 func (m *Merge) merge(a []int, lo int, mid int, hi int) {
 	left := lo
 	right := mid + 1
+	// 将原始数组塞到辅助数组中
 	for i := 0; i <= hi; i++ {
 		m.Aux[i] = a[i]
 	}

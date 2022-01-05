@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"sort"
 	"sortDemo/compare"
+	"strings"
 )
 
 type Transaction struct {
@@ -42,4 +43,20 @@ func main() {
 	ints := []int{-9, -8, 7, -4, 1, 5, 3, 6, 7, 0, 3, 5}
 	compare.MergeConstruct(ints)
 	fmt.Println(ints)
+	kmp := compare.Kmp("abc", "bc")
+	fmt.Println(kmp)
+}
+
+func repeatedStringMatch(a string, b string) int {
+	s := ""
+	ans := 0
+	max := len(a) + len(b)
+	for len(s) < max {
+		s += a
+		ans++
+		if strings.Contains(s, b) {
+			return ans
+		}
+	}
+	return -1
 }
