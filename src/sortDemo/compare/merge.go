@@ -1,5 +1,9 @@
 package compare
 
+import (
+	"math"
+)
+
 type Merge struct {
 	Arr []int
 	Aux []int
@@ -10,26 +14,37 @@ func MergeConstruct(a []int) {
 		Arr: a,
 		Aux: make([]int, len(a)),
 	}
-	merge.sort(a, 0, len(a)-1)
+	//merge.sortFr(0, len(a)-1)
+	merge.sortBu(len(a))
 }
 
+// 自底向上
+func (m *Merge) sortBu(N int) {
+	for i := 1; i < N; i = i + i {
+		for j := 0; j < N-i; j += i + i {
+			m.merge(j, j+i-1, int(math.Min(float64(j+i+i-1), float64(N-1))))
+		}
+	}
+}
+
+// 自顶向下
 // 拆分切片直到不能切为止
-func (m *Merge) sort(a []int, lo int, hi int) {
+func (m *Merge) sortFr(lo int, hi int) {
 	if hi <= lo {
 		return
 	}
 	mid := (lo + hi) >> 1
-	m.sort(a, lo, mid)
-	m.sort(a, mid+1, hi)
-	m.merge(a, lo, mid, hi)
+	m.sortFr(lo, mid)
+	m.sortFr(mid+1, hi)
+	m.merge(lo, mid, hi)
 }
 
-func (m *Merge) merge(a []int, lo int, mid int, hi int) {
+func (m *Merge) merge(lo int, mid int, hi int) {
 	left := lo
 	right := mid + 1
 	// 将原始数组塞到辅助数组中
 	for i := 0; i <= hi; i++ {
-		m.Aux[i] = a[i]
+		m.Aux[i] = m.Arr[i]
 	}
 	for i := lo; i <= hi; i++ {
 		// 左边用完，取右边

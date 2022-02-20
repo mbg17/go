@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"sort"
 )
 
@@ -321,4 +322,40 @@ func countSegments(s string) int {
 		}
 	}
 	return ans
+}
+
+func increasingTriplet(nums []int) bool {
+	first := int(^(uint(0) >> 1))
+	second := int(^(uint(0) >> 1))
+	for i := 0; i < len(nums); i++ {
+		if nums[i] < first {
+			first = nums[i]
+		} else if first < nums[i] && nums[i] < second {
+			second = nums[i]
+		} else if nums[i] > second {
+			return true
+		}
+	}
+	return false
+}
+
+func dominantIndex(nums []int) int {
+	first := -1
+	second := -1
+	max := 0
+	for i := 0; i < len(nums); i++ {
+		f := int(math.Max(float64(nums[i]), float64(second)))
+		if f > second {
+			first = second
+			second = nums[i]
+			max = i
+		} else if nums[i] > first && nums[i] < second {
+			first = nums[i]
+		}
+	}
+	if first == 0 || second/first >= 2 {
+		return max
+	} else {
+		return -1
+	}
 }

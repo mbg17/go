@@ -23,7 +23,8 @@ func (a Transactions) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a Transactions) Less(i, j int) bool { return a[i].amount < a[j].amount }
 
 func main() {
-	s := compare.Construct([]int{-9, -8, 7, -4, 1, 5, 3, 6, 7, 0, 3, 5})
+	i := []int{-9, -8, 7, -4, 1, 3, 6, 7, 0, 3, 5}
+	s := compare.Construct(i)
 	s.ChooseSort()
 	fmt.Println(s.Arr)
 	s = compare.Construct([]int{-9, -8, 7, -4, 1, 5, 3, 6, 7, 0, 3, 5})
